@@ -16,14 +16,18 @@
     "@unrest/vue": "^0.2.19",
     "@unrest/vue-storage": "^0.0.19",
     "@vue/cli-plugin-babel": "^5.0.8",
+    "lodash": "^4.17.21",
     "vue": "^3.2.47",
     "vue-router": "4"
   },
   "devDependencies": {
     "@unrest/eslint-config": "^0.0.8",
     "@vitejs/plugin-vue": "^4.1.0",
+    "autoprefixer": "^10.4.14",
     "eslint": "^8.42.0",
     "eslint-plugin-vue": "^9.14.1",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
     "vite": "^4.3.9"
   }
 }
