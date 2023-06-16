@@ -16,7 +16,8 @@
     "@unrest/vue": "^0.2.19",
     "@unrest/vue-storage": "^0.0.19",
     "@vue/cli-plugin-babel": "^5.0.8",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@unrest/eslint-config": "^0.0.8",
