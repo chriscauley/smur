@@ -1,0 +1,5 @@
+# server stuff
+*.pyc
+.venv
+env
+db.sqlite3
