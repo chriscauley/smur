@@ -37,5 +37,8 @@ export default defineConfig({
         './../../varia/super-metroid/icons',
       ],
     },
+    proxy: {
+      '/api': 'http://localhost:8732',
+    },
   },
 })

@@ -3,6 +3,7 @@
 .venv
 env
 db.sqlite3
+server/randos
 
 # client
 node_modules

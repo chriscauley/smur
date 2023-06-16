@@ -1,1 +1,6 @@
+@import './location-list.css';
 @import './tailwind.css';
+
+body {
+opacity: 05.;
+}

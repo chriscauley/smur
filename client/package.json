@@ -17,6 +17,7 @@
     "@unrest/vue-storage": "^0.0.19",
     "@vue/cli-plugin-babel": "^5.0.8",
     "lodash": "^4.17.21",
+    "postcss-for": "^2.1.1",
     "vue": "^3.2.47",
     "vue-router": "4"
   },

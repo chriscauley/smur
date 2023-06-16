@@ -1,0 +1,6 @@
+.location-lists {
+  @apply flex gap-4;
+  &__item {
+    cursor: pointer;
+  }
+}
