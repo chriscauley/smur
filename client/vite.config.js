@@ -29,6 +29,7 @@ export default defineConfig({
     ]
   },
   server: {
+    host: 'smur.localhost',
     fs: {
       allow: [
         // search up for workspace root

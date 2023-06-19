@@ -1,9 +1,9 @@
 <template>
   <div>
     <sm-item-tracker
-      format="pause"
+      format="grid"
       :inventory="scaled_inventory"
-      :width="512"
+      :width="400"
       @add-item="addItem"
       @toggle-item="toggleItem"
     />
@@ -29,23 +29,25 @@
 import axios from 'axios'
 
 export default {
+  __route: {
+    path: '/rando/:world/:logic',
+  },
   data() {
     return {
-      inventory: {},
       locations: {},
-      locations_visited: {},
       sequence_break: {},
     }
   },
   computed: {
     location_groups() {
       const groups = {
-        completed: [],
         available: [],
+        completed: [],
         unavailable: [],
       }
+      const { visited } = this.$store.local.state
       Object.entries(this.locations).forEach(([location, available]) => {
-        if (this.locations_visited[location]) {
+        if (visited[location]) {
           groups.completed.push(location)
         } else if (available) {
           groups.available.push(location)
@@ -56,28 +58,39 @@ export default {
       return groups
     },
     scaled_inventory() {
-      const inventory = { ...this.inventory }
-      const packs = ['missile', 'super-missile', 'power-bombs']
+      const inventory = { ...this.$store.local.state.inventory }
+      const packs = ['missile', 'super-missile', 'power-bomb']
       packs.forEach((slug) => (inventory[slug] = (inventory[slug] || 0) * 5))
       return inventory
     },
   },
+  mounted() {
+    this.refetch()
+  },
   methods: {
     addItem(slug, quantity) {
-      this.inventory[slug] = (this.inventory[slug] || 0) + quantity
-      this.inventory[slug] = Math.max(0, this.inventory[slug])
+      const { inventory } = this.$store.local.state
+      inventory[slug] = (inventory[slug] || 0) + quantity
+      inventory[slug] = Math.max(0, inventory[slug])
+      this.$store.local.save({ inventory })
       this.refetch()
     },
     toggleItem(slug) {
-      this.inventory[slug] = !this.inventory[slug]
+      const { inventory } = this.$store.local.state
+      inventory[slug] = !inventory[slug]
+      this.$store.local.save({ inventory })
       this.refetch()
     },
     refetch() {
-      const { inventory } = this
-      axios.post('/api/solve/', { inventory }).then((r) => (this.locations = r.data.locations))
+      const { inventory } = this.$store.local.state
+      const { world, logic } = this.$route.params
+      const data = { inventory, logic, world }
+      axios.post('/api/solve/', data).then((r) => (this.locations = r.data.locations))
     },
     clickLocation(location) {
-      this.locations_visited[location] = !this.locations_visited[location]
+      const { visited } = this.$store.local.state
+      visited[location] = !visited[location]
+      this.$store.local.save({ visited })
     },
   },
 }
