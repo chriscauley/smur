@@ -1,9 +1,14 @@
 <template>
   <div>
+    <site-nav />
     <router-view />
   </div>
 </template>
 
 <script>
-export default {}
+import SiteNav from '@/components/SiteNav.vue'
+
+export default {
+  components: { SiteNav },
+}
 </script>

@@ -42,8 +42,8 @@ export default {
     location_groups() {
       const groups = {
         available: [],
-        completed: [],
         unavailable: [],
+        completed: [],
       }
       const { visited } = this.$store.local.state
       Object.entries(this.locations).forEach(([location, available]) => {
@@ -63,6 +63,10 @@ export default {
       packs.forEach((slug) => (inventory[slug] = (inventory[slug] || 0) * 5))
       return inventory
     },
+  },
+  watch: {
+    '$route.params.logic': 'refetch',
+    '$route.params.world': 'refetch',
   },
   mounted() {
     this.refetch()
