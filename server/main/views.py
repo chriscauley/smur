@@ -3,37 +3,23 @@ from django.views.decorators.csrf import csrf_exempt
 
 import json
 
-from natureRando.loadout import Loadout
-from natureRando.item_data import all_items
-from natureRando import logicCasual
+from smur import get_randomizer
 
-name_by_slug = {
-    'bomb': 'Bombs',
-    'spring-ball': 'Springball',
-    'x-ray': 'Beam Burst',
-    'grappling-beam': 'Grapple Beam',
-    'hi-jump-boots': 'HiJump',
-    'spazer-beam': 'Spazer',
-}
-item_by_name = {}
-item_by_slug = {}
-
-for name, item in all_items.items():
-    slug = name.lower().replace(' ', '-')
-    name_by_slug[slug] = name
-    item_by_name[name] = item
-    item_by_slug[slug] = item
-
+SKIPS = ['draygon', 'phantoon', 'kraid', 'ridley']
 
 @csrf_exempt
 def solve(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
-    loadout = Loadout('whatever')
+    randomizer = get_randomizer(data['world'])
+    logic = randomizer.get_logic(data['logic'])
+    loadout = randomizer.Loadout('whatever')
     for slug, quantity in data['inventory'].items():
-        name = name_by_slug[slug]
-        item = item_by_name[name]
+        if slug in SKIPS:
+            continue
+        name = randomizer.name_by_slug[slug]
+        item = randomizer.item_by_name[name]
         loadout.contents[item] = quantity
     locations = {}
-    for name, func in logicCasual.location_logic.items():
+    for name, func in logic.location_logic.items():
         locations[name] = func(loadout)
     return JsonResponse({'locations': locations})

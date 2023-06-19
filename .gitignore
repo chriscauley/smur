@@ -3,7 +3,7 @@
 .venv
 env
 db.sqlite3
-server/randos
+server/smur/*Rando
 
 # client
 node_modules
